@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AGENT HQ — โรงสีข้าวเหนียว กข6</title>
+<meta name="description" content="ศูนย์บัญชาการ AI agent 11 ตำแหน่งสำหรับโรงสีข้าวเหนียว กข6" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Prompt:wght@400;500;600;700&family=Sarabun:wght@400;500&family=VT323&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:#eef2f9; --grid:#dbe3f0; --panel:#ffffff; --panel2:#f7f9fd;
+    --ink:#1b2438; --muted:#56678a; --dim:#8595b3; --line:#e1e7f2; --line2:#d4ddee;
+    --green:#2f9e5a; --amber:#c8841f; --cyan:#2f86c5; --purple:#7d54c7;
+    --green-s:#e7f6ec; --amber-s:#fbf1df; --cyan-s:#e4f1fb; --purple-s:#f0e9fb;
+    --shadow:0 1px 2px rgba(27,36,56,.04), 0 10px 26px rgba(27,36,56,.07);
+    --shadow-h:0 2px 4px rgba(27,36,56,.06), 0 18px 40px rgba(27,36,56,.14);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Sarabun', system-ui, sans-serif;
+    background:
+      radial-gradient(1100px 560px at 82% -8%, #e3ecfb 0%, transparent 60%),
+      radial-gradient(900px 480px at -5% 108%, #e8f3ec 0%, transparent 55%),
+      var(--bg);
+    color:var(--ink); line-height:1.55; min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  body::before {
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.6;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:40px 40px; mask-image:radial-gradient(circle at 50% 25%, #000 0%, transparent 78%);
+  }
+  .pixel { font-family:'Press Start 2P', monospace; letter-spacing:.5px; }
+  .mono { font-family:'VT323', monospace; }
+  .wrap { position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 18px; }
+
+  /* ---- header ---- */
+  header { padding:36px 0 10px; text-align:center; }
+  .title { font-size:clamp(28px,7vw,56px); color:var(--ink);
+    text-shadow:3px 3px 0 #cdd8ee; line-height:1.1; }
+  .title .hq { color:var(--cyan); }
+  .subtitle { margin-top:14px; font-family:'Prompt'; font-weight:600; font-size:clamp(15px,2.4vw,20px); color:var(--ink); }
+  .subtitle .tag { color:var(--green); }
+  .statusbar { display:inline-flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:16px; }
+  .chip { display:inline-flex; align-items:center; gap:7px; background:var(--panel); border:1px solid var(--line);
+    border-radius:8px; padding:6px 12px; font-size:12px; color:var(--muted); box-shadow:var(--shadow); }
+  .chip b.mono { font-size:18px; color:var(--ink); line-height:1; }
+  .led { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); animation:pulse 1.8s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* ---- layout ---- */
+  .layout { display:grid; grid-template-columns:1fr 320px; gap:18px; margin:26px 0 40px; align-items:start; }
+  @media (max-width:880px){ .layout{ grid-template-columns:1fr; } }
+
+  .sec { margin-bottom:22px; }
+  .sec-head { display:flex; align-items:center; gap:10px; margin:0 0 12px; }
+  .sec-head .pixel { font-size:10px; color:var(--cyan); }
+  .sec-head .ln { flex:1; height:1px; background:linear-gradient(90deg,var(--line2),transparent); }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(212px,1fr)); gap:14px; }
+
+  /* ---- agent pod ---- */
+  .pod { position:relative; display:block; text-decoration:none; color:inherit;
+    background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; overflow:hidden;
+    box-shadow:var(--shadow); transition:transform .16s, box-shadow .16s, border-color .16s; }
+  .pod::before { content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--ac); }
+  .pod:hover { transform:translateY(-5px); border-color:var(--ac); box-shadow:var(--shadow-h); }
+  .pod-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .avatar { width:46px; height:46px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+    font-size:24px; background:var(--ac-s); border:1px solid var(--ac); }
+  .stat-led { display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--dim); font-family:'VT323'; letter-spacing:1px; }
+  .stat-led i { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 7px var(--green); }
+  .pod h3 { font-family:'Prompt'; font-weight:600; font-size:16px; color:var(--ink); margin-bottom:5px; }
+  .pod p { font-size:13px; color:var(--muted); min-height:38px; }
+  .pod .go { margin-top:12px; display:flex; align-items:center; gap:7px; font-family:'VT323'; font-size:18px; letter-spacing:1px;
+    color:var(--ac); border-top:1px dashed var(--line2); padding-top:10px; }
+  .pod .go .arr { transition:transform .16s; }
+  .pod:hover .go .arr { transform:translateX(5px); }
+
+  .ac-green  { --ac:var(--green);  --ac-s:var(--green-s); }
+  .ac-amber  { --ac:var(--amber);  --ac-s:var(--amber-s); }
+  .ac-cyan   { --ac:var(--cyan);   --ac-s:var(--cyan-s); }
+  .ac-purple { --ac:var(--purple); --ac-s:var(--purple-s); }
+
+  /* ---- dashboard ---- */
+  .dash { position:sticky; top:16px; display:flex; flex-direction:column; gap:14px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px 15px; box-shadow:var(--shadow); }
+  .card .ch { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .card .ch .pixel { font-size:9px; color:var(--cyan); }
+  .card .ch .dot3 { color:var(--dim); }
+
+  .meter { margin-bottom:11px; } .meter:last-child { margin-bottom:0; }
+  .meter .lab { display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:5px; }
+  .meter .lab .v { font-family:'VT323'; font-size:16px; color:var(--ink); }
+  .bar { height:9px; background:var(--panel2); border:1px solid var(--line2); border-radius:5px; overflow:hidden; padding:1px; }
+  .bar > i { display:block; height:100%; border-radius:3px; background:var(--c); transition:width .6s; }
+
+  .deps { display:flex; flex-direction:column; gap:9px; }
+  .dep { display:flex; align-items:center; gap:9px; font-size:13px; color:var(--ink); }
+  .dep .sw { width:10px; height:10px; border-radius:3px; background:var(--c); }
+  .dep .n { margin-left:auto; font-family:'VT323'; font-size:17px; color:var(--dim); }
+
+  .stat-row { display:flex; gap:8px; }
+  .stat-box { flex:1; text-align:center; background:var(--panel2); border:1px solid var(--line2); border-radius:9px; padding:9px 4px; }
+  .stat-box .num { font-family:'VT323'; font-size:26px; line-height:1; color:var(--c); }
+  .stat-box .k { font-size:11px; color:var(--dim); font-family:'VT323'; letter-spacing:1px; margin-top:3px; }
+
+  .log { display:flex; flex-direction:column; gap:7px; max-height:230px; overflow:hidden; }
+  .log .row { display:flex; gap:8px; font-size:12.5px; color:var(--muted); line-height:1.35; animation:fadein .4s; }
+  .log .row .ts { font-family:'VT323'; font-size:14px; color:var(--cyan); flex-shrink:0; }
+  @keyframes fadein { from{opacity:0; transform:translateY(-4px)} to{opacity:1; transform:none} }
+
+  .howto { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:24px; margin-bottom:30px; box-shadow:var(--shadow); }
+  .howto .pixel { font-size:11px; color:var(--green); margin-bottom:18px; display:block; }
+  .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; }
+  .stp { display:flex; gap:12px; }
+  .stp .n { flex-shrink:0; width:30px; height:30px; border-radius:9px; background:var(--cyan-s); border:1px solid var(--cyan); color:var(--cyan);
+    font-family:'VT323'; font-size:20px; display:flex; align-items:center; justify-content:center; }
+  .stp b { font-family:'Prompt'; font-weight:500; font-size:14px; display:block; color:var(--ink); }
+  .stp span { font-size:12.5px; color:var(--muted); }
+
+  footer { text-align:center; padding:24px 0 50px; color:var(--dim); font-size:12px; }
+  footer .pixel { font-size:10px; color:var(--cyan); display:block; margin-bottom:10px; }
+  footer a { color:var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="title pixel">AGENT <span class="hq">HQ</span></div>
+    <div class="subtitle">🏭 ศูนย์บัญชาการ <span class="tag">โรงสีข้าวเหนียว กข6</span></div>
+    <div class="statusbar">
+      <span class="chip"><span class="led"></span> SYSTEM ONLINE</span>
+      <span class="chip">AGENTS <b class="mono">11</b></span>
+      <span class="chip">⏱ <b class="mono" id="clock">--:--:--</b></span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div><main id="app"></main></div>
+
+    <aside class="dash">
+      <div class="card">
+        <div class="ch"><span class="pixel">HQ DASHBOARD</span><span class="dot3">▦</span></div>
+        <div class="meter"><div class="lab"><span>กำลังการผลิต</span><span class="v" id="m1v">78%</span></div><div class="bar"><i id="m1" style="--c:var(--green); width:78%"></i></div></div>
+        <div class="meter"><div class="lab"><span>สต๊อกข้าวสาร</span><span class="v" id="m2v">64%</span></div><div class="bar"><i id="m2" style="--c:var(--amber); width:64%"></i></div></div>
+        <div class="meter"><div class="lab"><span>คิวออเดอร์</span><span class="v" id="m3v">41%</span></div><div class="bar"><i id="m3" style="--c:var(--cyan); width:41%"></i></div></div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="pixel">DEPARTMENTS</span></div>
+        <div class="deps">
+          <div class="dep" style="--c:var(--green)"><span class="sw"></span> ตรวจสอบคุณภาพ <span class="n">2</span></div>
+          <div class="dep" style="--c:var(--amber)"><span class="sw"></span> ผลิต · คลัง · ขนส่ง <span class="n">3</span></div>
+          <div class="dep" style="--c:var(--cyan)"><span class="sw"></span> ค้าขาย <span class="n">2</span></div>
+          <div class="dep" style="--c:var(--purple)"><span class="sw"></span> บริหาร · การเงิน <span class="n">4</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="pixel">AGENT STATUS</span></div>
+        <div class="stat-row">
+          <div class="stat-box" style="--c:var(--green)"><div class="num">11</div><div class="k">ONLINE</div></div>
+          <div class="stat-box" style="--c:var(--amber)"><div class="num">0</div><div class="k">IDLE</div></div>
+          <div class="stat-box" style="--c:var(--cyan)"><div class="num">0</div><div class="k">BUSY</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="pixel">ACTIVITY LOG</span><span class="led"></span></div>
+        <div class="log" id="log"></div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="howto">
+    <span class="pixel">▶ HOW TO USE</span>
+    <div class="steps">
+      <div class="stp"><div class="n">1</div><div><b>เลือกตำแหน่ง</b><span>คลิกโต๊ะ agent ที่ตรงกับงาน</span></div></div>
+      <div class="stp"><div class="n">2</div><div><b>เข้า claude.ai</b><span>เปิด Project ของ agent ทันที</span></div></div>
+      <div class="stp"><div class="n">3</div><div><b>พิมพ์คำถาม</b><span>ใส่ตัวเลขจริง ความชื้น เม็ดใส น้ำหนัก</span></div></div>
+      <div class="stp"><div class="n">4</div><div><b>ได้คำตอบทันที</b><span>AI จำบทบาทโรงสีให้ตลอด</span></div></div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="pixel">AGENT HQ · โรงสีข้าวเหนียว กข6</span>
+    ขับเคลื่อนด้วย Claude · <a href="https://claude.ai/projects" target="_blank" rel="noopener">เปิด claude.ai ↗</a>
+  </footer>
+</div>
+
+<script>
+  const P = "https://claude.ai/project/";
+  const LINKS = {
+    "qc-paddy":    P+"019eba87-7686-7791-a4c6-a9e0d2b8d7be",
+    "qc-rice":     P+"019eba88-f76b-71d3-a2c7-49ee4c8dc4f3",
+    "accounting":  P+"019eba8d-ab44-737b-a787-48ba5a6fcf42",
+    "procurement": P+"019eba8e-0671-7270-aca8-079055ce356f",
+    "production":  P+"019eba8e-50ca-77ea-b2c2-778d88f9d443",
+    "sales":       P+"019eba8e-943d-7299-b3b0-3343abf012fa",
+    "warehouse":   P+"019eba8e-de2a-76a9-8a0d-c42ea79ab06b",
+    "logistics":   P+"019eba8f-21c3-7265-a634-e0f73d5b0766",
+    "strategy":    P+"019eba8f-6bf4-75cc-8f3f-85fd5c23e736",
+    "hr":          P+"019eba8f-b590-701e-9c10-a1b66619a022",
+    "finance":     P+"019eba8f-fdc8-77be-b533-ed4ec690f93d"
+  };
+  const PROJECTS_HOME = "https://claude.ai/projects";
+
+  const SECTIONS = [
+    { label:"QUALITY CONTROL", accent:"ac-green", agents:[
+      {id:"qc-paddy", e:"🌾", n:"QC ข้าวเปลือก", d:"ตรวจรับ — ความบริสุทธิ์ เมล็ดเหลือง ความชื้น % เม็ดใส"},
+      {id:"qc-rice",  e:"🍚", n:"QC ข้าวสาร",    d:"ตรวจหลังสี — ต้นข้าว ปลายข้าว ความขาว สิ่งเจือปน"},
+    ]},
+    { label:"PRODUCTION · STOCK · LOGISTICS", accent:"ac-amber", agents:[
+      {id:"production", e:"⚙️", n:"ผจก.ผลิต",    d:"คุมการสี อบลดความชื้น อัตราแปรสภาพ บำรุงรักษา"},
+      {id:"warehouse",  e:"🏬", n:"หัวหน้าคลัง", d:"ระบบ FIFO บัตรกอง ควบคุมสต๊อกและการเก็บ"},
+      {id:"logistics",  e:"🚛", n:"Logistics",   d:"จัดรถส่งของ คิวรถหน้าท่า ต้นทุนขนส่งต่อตัน"},
+    ]},
+    { label:"TRADE", accent:"ac-cyan", agents:[
+      {id:"procurement", e:"🤝", n:"จัดซื้อ", d:"วางแผนรับซื้อ ตั้งราคาหน้าท่า เครือข่ายเกษตรกร"},
+      {id:"sales",       e:"💼", n:"ขาย",     d:"ขายข้าวสารเหนียว ยี่ปั๊ว/ห้าง/ส่งออก ตั้งราคา"},
+    ]},
+    { label:"MANAGEMENT · FINANCE", accent:"ac-purple", agents:[
+      {id:"accounting", e:"🧾", n:"บัญชี",       d:"บัญชีซื้อ-ขาย ต้นทุนต่อหน่วย ภาษี งบการเงิน"},
+      {id:"finance",    e:"💰", n:"การเงิน",     d:"Cash flow เงินทุนหมุนเวียน สินเชื่อ ความเสี่ยง"},
+      {id:"hr",         e:"👥", n:"บุคคล (KPI)", d:"บริหารคน ค่าแรง สวัสดิการ ระบบ KPI ทุกฝ่าย"},
+      {id:"strategy",   e:"🧭", n:"กลยุทธ์",     d:"วิเคราะห์ตลาด การลงทุน แผนการเติบโต"},
+    ]},
+  ];
+
+  const linkFor = id => ((LINKS[id]||"").trim() || PROJECTS_HOME);
+  const app = document.getElementById("app");
+  SECTIONS.forEach(sec => {
+    const s = document.createElement("section"); s.className = "sec";
+    s.innerHTML = '<div class="sec-head"><span class="pixel">'+sec.label+'</span><span class="ln"></span></div>';
+    const g = document.createElement("div"); g.className = "grid";
+    sec.agents.forEach(a => {
+      const pod = document.createElement("a");
+      pod.className = "pod " + sec.accent;
+      pod.href = linkFor(a.id); pod.target = "_blank"; pod.rel = "noopener";
+      pod.innerHTML =
+        '<div class="pod-top"><div class="avatar">'+a.e+'</div><span class="stat-led"><i></i>ONLINE</span></div>'+
+        '<h3>'+a.n+'</h3><p>'+a.d+'</p>'+
+        '<div class="go">▶ เปิดแชท <span class="arr">→</span></div>';
+      g.appendChild(pod);
+    });
+    s.appendChild(g); app.appendChild(s);
+  });
+
+  const clk = document.getElementById("clock");
+  setInterval(() => { const t=new Date();
+    clk.textContent=[t.getHours(),t.getMinutes(),t.getSeconds()].map(x=>String(x).padStart(2,"0")).join(":"); }, 1000);
+
+  const FEED = [
+    ["🌾","QC ข้าวเปลือก ตรวจรับรถคันที่ #12"],["⚙️","ผจก.ผลิต ปรับลูกยางกะเทาะ"],
+    ["💰","การเงิน อัปเดตประมาณการเงินสด"],["🏬","หัวหน้าคลัง บันทึก FIFO ล็อต A-204"],
+    ["💼","ขาย ปิดดีล 30 ตัน"],["🤝","จัดซื้อ ตั้งราคาหน้าท่า 14,200 บ./ตัน"],
+    ["🚛","Logistics จัดรถ 10 ล้อ × 2 คัน"],["🍚","QC ข้าวสาร ออก COA ล็อต R-118"],
+    ["🧾","บัญชี กระทบยอดสต๊อกสิ้นวัน"],["🧭","กลยุทธ์ วิเคราะห์ราคาตลาด"],
+    ["👥","บุคคล อัปเดต KPI ฝ่ายผลิต"],["⚙️","ผจก.ผลิต yield ล็อตล่าสุด 63.8%"],
+  ];
+  const logEl = document.getElementById("log");
+  const ts = () => { const t=new Date(); return "["+String(t.getHours()).padStart(2,"0")+":"+String(t.getMinutes()).padStart(2,"0")+"]"; };
+  function pushLog(){
+    const [e,msg]=FEED[Math.floor(Math.random()*FEED.length)];
+    const row=document.createElement("div"); row.className="row";
+    row.innerHTML='<span class="ts">'+ts()+'</span><span>'+e+' '+msg+'</span>';
+    logEl.prepend(row); while(logEl.children.length>7) logEl.removeChild(logEl.lastChild);
+  }
+  for(let i=0;i<5;i++) pushLog(); setInterval(pushLog,3500);
+
+  function drift(id,base){ const bar=document.getElementById(id), val=document.getElementById(id+"v");
+    setInterval(()=>{ const v=Math.max(20,Math.min(95,base+Math.round((Math.random()-.5)*8)));
+      bar.style.width=v+"%"; val.textContent=v+"%"; }, 4200); }
+  drift("m1",78); drift("m2",64); drift("m3",41);
+</script>
+</body>
+</html>
