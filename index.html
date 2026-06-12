@@ -74,7 +74,8 @@
     font-size:24px; background:var(--ac-s); border:1px solid var(--ac); }
   .stat-led { display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--dim); font-family:'VT323'; letter-spacing:1px; }
   .stat-led i { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 7px var(--green); }
-  .pod h3 { font-family:'Prompt'; font-weight:600; font-size:16px; color:var(--ink); margin-bottom:5px; }
+  .pod h3 { font-family:'Prompt'; font-weight:600; font-size:17px; color:var(--ink); margin-bottom:2px; }
+  .pod .role { font-family:'Prompt'; font-weight:500; font-size:12px; color:var(--ac); margin-bottom:7px; }
   .pod p { font-size:13px; color:var(--muted); min-height:38px; }
   .pod .go { margin-top:12px; display:flex; align-items:center; gap:7px; font-family:'VT323'; font-size:18px; letter-spacing:1px;
     color:var(--ac); border-top:1px dashed var(--line2); padding-top:10px; }
@@ -213,23 +214,23 @@
 
   const SECTIONS = [
     { label:"QUALITY CONTROL", accent:"ac-green", agents:[
-      {id:"qc-paddy", e:"🌾", n:"QC ข้าวเปลือก", d:"ตรวจรับ — ความบริสุทธิ์ เมล็ดเหลือง ความชื้น % เม็ดใส"},
-      {id:"qc-rice",  e:"🍚", n:"QC ข้าวสาร",    d:"ตรวจหลังสี — ต้นข้าว ปลายข้าว ความขาว สิ่งเจือปน"},
+      {id:"qc-paddy", e:"🌾", n:"พี่พงษ์", role:"QC ข้าวเปลือก", d:"ตรวจรับ — ความบริสุทธิ์ เมล็ดเหลือง ความชื้น % เม็ดใส"},
+      {id:"qc-rice",  e:"🍚", n:"น้องฝ้าย", role:"QC ข้าวสาร",   d:"ตรวจหลังสี — ต้นข้าว ปลายข้าว ความขาว สิ่งเจือปน"},
     ]},
     { label:"PRODUCTION · STOCK · LOGISTICS", accent:"ac-amber", agents:[
-      {id:"production", e:"⚙️", n:"ผจก.ผลิต",    d:"คุมการสี อบลดความชื้น อัตราแปรสภาพ บำรุงรักษา"},
-      {id:"warehouse",  e:"🏬", n:"หัวหน้าคลัง", d:"ระบบ FIFO บัตรกอง ควบคุมสต๊อกและการเก็บ"},
-      {id:"logistics",  e:"🚛", n:"Logistics",   d:"จัดรถส่งของ คิวรถหน้าท่า ต้นทุนขนส่งต่อตัน"},
+      {id:"production", e:"⚙️", n:"ช่างเอก",  role:"ผจก.ผลิต",     d:"คุมการสี อบลดความชื้น อัตราแปรสภาพ บำรุงรักษา"},
+      {id:"warehouse",  e:"🏬", n:"พี่บุญมา", role:"หัวหน้าคลัง",  d:"ระบบ FIFO บัตรกอง ควบคุมสต๊อกและการเก็บ"},
+      {id:"logistics",  e:"🚛", n:"พี่ตุ้ย",  role:"Logistics",    d:"จัดรถส่งของ คิวรถหน้าท่า ต้นทุนขนส่งต่อตัน"},
     ]},
     { label:"TRADE", accent:"ac-cyan", agents:[
-      {id:"procurement", e:"🤝", n:"จัดซื้อ", d:"วางแผนรับซื้อ ตั้งราคาหน้าท่า เครือข่ายเกษตรกร"},
-      {id:"sales",       e:"💼", n:"ขาย",     d:"ขายข้าวสารเหนียว ยี่ปั๊ว/ห้าง/ส่งออก ตั้งราคา"},
+      {id:"procurement", e:"🤝", n:"พี่แดง", role:"จัดซื้อ", d:"วางแผนรับซื้อ ตั้งราคาหน้าท่า เครือข่ายเกษตรกร"},
+      {id:"sales",       e:"💼", n:"พี่นภา", role:"ขาย",     d:"ขายข้าวสารเหนียว ยี่ปั๊ว/ห้าง/ส่งออก ตั้งราคา"},
     ]},
     { label:"MANAGEMENT · FINANCE", accent:"ac-purple", agents:[
-      {id:"accounting", e:"🧾", n:"บัญชี",       d:"บัญชีซื้อ-ขาย ต้นทุนต่อหน่วย ภาษี งบการเงิน"},
-      {id:"finance",    e:"💰", n:"การเงิน",     d:"Cash flow เงินทุนหมุนเวียน สินเชื่อ ความเสี่ยง"},
-      {id:"hr",         e:"👥", n:"บุคคล (KPI)", d:"บริหารคน ค่าแรง สวัสดิการ ระบบ KPI ทุกฝ่าย"},
-      {id:"strategy",   e:"🧭", n:"กลยุทธ์",     d:"วิเคราะห์ตลาด การลงทุน แผนการเติบโต"},
+      {id:"accounting", e:"🧾", n:"พี่อ้อย", role:"บัญชี",       d:"บัญชีซื้อ-ขาย ต้นทุนต่อหน่วย ภาษี งบการเงิน"},
+      {id:"finance",    e:"💰", n:"คุณวิไล", role:"การเงิน",     d:"Cash flow เงินทุนหมุนเวียน สินเชื่อ ความเสี่ยง"},
+      {id:"hr",         e:"👥", n:"พี่มาลี", role:"บุคคล (KPI)", d:"บริหารคน ค่าแรง สวัสดิการ ระบบ KPI ทุกฝ่าย"},
+      {id:"strategy",   e:"🧭", n:"อ.วิชัย", role:"กลยุทธ์",     d:"วิเคราะห์ตลาด การลงทุน แผนการเติบโต"},
     ]},
   ];
 
@@ -245,7 +246,7 @@
       pod.href = linkFor(a.id); pod.target = "_blank"; pod.rel = "noopener";
       pod.innerHTML =
         '<div class="pod-top"><div class="avatar">'+a.e+'</div><span class="stat-led"><i></i>ONLINE</span></div>'+
-        '<h3>'+a.n+'</h3><p>'+a.d+'</p>'+
+        '<h3>'+a.n+'</h3><div class="role">'+a.role+'</div><p>'+a.d+'</p>'+
         '<div class="go">▶ เปิดแชท <span class="arr">→</span></div>';
       g.appendChild(pod);
     });
@@ -257,12 +258,12 @@
     clk.textContent=[t.getHours(),t.getMinutes(),t.getSeconds()].map(x=>String(x).padStart(2,"0")).join(":"); }, 1000);
 
   const FEED = [
-    ["🌾","QC ข้าวเปลือก ตรวจรับรถคันที่ #12"],["⚙️","ผจก.ผลิต ปรับลูกยางกะเทาะ"],
-    ["💰","การเงิน อัปเดตประมาณการเงินสด"],["🏬","หัวหน้าคลัง บันทึก FIFO ล็อต A-204"],
-    ["💼","ขาย ปิดดีล 30 ตัน"],["🤝","จัดซื้อ ตั้งราคาหน้าท่า 14,200 บ./ตัน"],
-    ["🚛","Logistics จัดรถ 10 ล้อ × 2 คัน"],["🍚","QC ข้าวสาร ออก COA ล็อต R-118"],
-    ["🧾","บัญชี กระทบยอดสต๊อกสิ้นวัน"],["🧭","กลยุทธ์ วิเคราะห์ราคาตลาด"],
-    ["👥","บุคคล อัปเดต KPI ฝ่ายผลิต"],["⚙️","ผจก.ผลิต yield ล็อตล่าสุด 63.8%"],
+    ["🌾","พี่พงษ์ ตรวจรับรถคันที่ #12"],["⚙️","ช่างเอก ปรับลูกยางกะเทาะ"],
+    ["💰","คุณวิไล อัปเดตประมาณการเงินสด"],["🏬","พี่บุญมา บันทึก FIFO ล็อต A-204"],
+    ["💼","พี่นภา ปิดดีล 30 ตัน"],["🤝","พี่แดง ตั้งราคาหน้าท่า 14,200 บ./ตัน"],
+    ["🚛","พี่ตุ้ย จัดรถ 10 ล้อ × 2 คัน"],["🍚","น้องฝ้าย ออก COA ล็อต R-118"],
+    ["🧾","พี่อ้อย กระทบยอดสต๊อกสิ้นวัน"],["🧭","อ.วิชัย วิเคราะห์ราคาตลาด"],
+    ["👥","พี่มาลี อัปเดต KPI ฝ่ายผลิต"],["⚙️","ช่างเอก yield ล็อตล่าสุด 63.8%"],
   ];
   const logEl = document.getElementById("log");
   const ts = () => { const t=new Date(); return "["+String(t.getHours()).padStart(2,"0")+":"+String(t.getMinutes()).padStart(2,"0")+"]"; };
